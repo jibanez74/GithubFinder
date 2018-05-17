@@ -1,28 +1,28 @@
-// init Github class
+// init class Github
 const github = new Github;
 
-// form input value
+// init Ui class
+const ui = new Ui;
+
+// grab search input
 const searchUser = document.getElementById('searchUser');
 
-
-// init event listener
 searchUser.addEventListener('keyup', (e) => {
 
-  // get input value
-  const searchStr = e.target.value;
+  // grab the text from input
+  const query = e.target.value;
 
-  if (searchStr !=== '') {
-    github.getUser(searchStr)
-      .then(data => {
-        if (data.profile.message === 'Not Found') {
-          // show alert
-        } else {
-          // show profile
-        }
-      });
+  // evaluate query variable and execute the appropriate methods
+  if (query !== '') {
+    github.getUser(query).then(data => {
+      if (data.profile.message === 'Not Found') {
+        console.log('not found');
+      } else {
+        ui.showProfile(data.profile);
+      }
+    });
   } else {
-    // clear profile
+    console.log('clear profile');
   }
-
 
 });
