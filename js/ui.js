@@ -1,8 +1,9 @@
 class Ui {
-   constructor() {
+  constructor() {
     this.profile = document.getElementById('profile');
   }
 
+  // this method will display the user's info, but WILL NOT display repos
   showProfile(user) {
     this.profile.innerHTML = `
     <div class="card card-body mb-3">
@@ -31,4 +32,40 @@ class Ui {
     `;
   }
 
+  // method to clear the profile section if the search query does not match an existing github user
+  clearProfile () {
+    this.profile.innerHTML = ``;
+  }
+
+  showAlert () {
+    // clear out alerts
+    this.clearAlerts();
+    
+    // create the alert html element
+    const div = document.createElement('div');
+    div.className('alert alert-danger');
+    div.appendChild(document.createTextNode('Profile was not found!'));
+
+    // grab the card with the class of search
+    const searchCard = document.querySelector('.search');
+
+    // grab the container where the alerts will be displayed
+    const searchContainer = document.querySelector('.search-container');
+
+    // insert the alert
+    searchContainer.insertBefore(div, searchCard);
+
+    // remove the alert after 3 secs
+    setTimeout(() => this.clearAlerts, 3000);
+  }
+
+  clearAlerts () {
+    // grab the alerts
+    const alerts = document.querySelector('.alert');
+
+    // if there is an alert, remove it
+    if (alerts) {
+      alerts.remove();
+    }
+  }
 }
