@@ -32,38 +32,64 @@ class Ui {
     `;
   }
 
+  // display repos
+  showRepos(repos) {
+    let output = ``;
+
+    repos.forEach((repo) => {
+      output += `
+      <div class="card card-body mb-2">
+      <div class="row">
+        <div class="col-md-6">
+          <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+        </div>
+        <div class="col-md-6">
+        <span class="badge badge-primary">Stars: ${repo.stargazers_count}</span>
+        <span class="badge badge-secondary">Watchers: ${repo.watchers_count}</span>
+        <span class="badge badge-success">Forks: ${repo.forms_count}</span>
+        </div>
+      </div>
+    </div>
+      `;
+    });
+
+    document.getElementById('repos').innerHTML = output;
+  }
+
   // method to clear the profile section if the search query does not match an existing github user
-  clearProfile () {
+  clearProfile() {
     this.profile.innerHTML = ``;
   }
 
-  showAlert () {
-    // clear out alerts
+  showAlerts () {
+    // clear any alerts
     this.clearAlerts();
-    
-    // create the alert html element
+
+    // create a div html element to hold alert
     const div = document.createElement('div');
-    div.className('alert alert-danger');
-    div.appendChild(document.createTextNode('Profile was not found!'));
 
-    // grab the card with the class of search
-    const searchCard = document.querySelector('.search');
+    // format the msg that will go inside the alert
+    div.className = 'alert alert-danger';
+    div.appendChild(document.createTextNode('No profile matches your query!'));
 
-    // grab the container where the alerts will be displayed
+    // grab the main container
     const searchContainer = document.querySelector('.search-container');
 
-    // insert the alert
-    searchContainer.insertBefore(div, searchCard);
+    // grab the class of the search card
+    const searchCard = document.querySelector('.search-card');
 
-    // remove the alert after 3 secs
-    setTimeout(() => this.clearAlerts, 3000);
+    searchCard.insertBefore(div, searchContainer);
+
+    setTimeout(() => {
+      this.clearAlerts();
+    }, 3000);
   }
 
+  // remove alerts from the ui
   clearAlerts () {
-    // grab the alerts
     const alerts = document.querySelector('.alert');
 
-    // if there is an alert, remove it
+    // if the alert is there, remove it
     if (alerts) {
       alerts.remove();
     }

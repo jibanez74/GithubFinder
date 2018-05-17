@@ -18,10 +18,11 @@ searchUser.addEventListener('keyup', (e) => {
     github.getUser(query).then(data => {
       if (data.profile.message === 'Not Found') {
         // display an alert to indicate that no profile matches the query entered
-        ui.showAlert();
+        ui.showAlerts ();
       } else {
         // display basic profile info
         ui.showProfile(data.profile);
+        ui.showRepos(data.repos);
       }
     });
   } else {
